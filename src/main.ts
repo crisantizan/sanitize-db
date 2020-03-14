@@ -1,10 +1,9 @@
 import { config } from 'dotenv';
 import { getEnvVariablesPath } from '@/helpers/shared.helper';
-import { EnvMode } from '@/typings/shared.typing';
 
 // load environment variables according to mode
 config({
-  path: getEnvVariablesPath(process.env.NODE_ENV as EnvMode),
+  path: getEnvVariablesPath(process.env.NODE_ENV),
 });
 
 // register alias in javascript files

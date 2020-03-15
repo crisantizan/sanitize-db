@@ -13,6 +13,9 @@ export class UsersController implements Controller {
     this.initRoutes();
   }
 
+  /**
+   * important: use .bind(this) in all methods that you use
+   */
   public initRoutes() {
     this.router.get('/', this.index.bind(this));
   }

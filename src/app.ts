@@ -1,6 +1,8 @@
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import router from 'router';
+
 import { EnvService } from './services/env.service';
 
 const app = express();
@@ -16,5 +18,7 @@ app.use(express.json()).use(helmet());
 if (inDevelopment) {
   app.use(morgan('dev'));
 }
+
+app.use(router);
 
 export default app;

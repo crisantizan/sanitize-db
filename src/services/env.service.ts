@@ -2,6 +2,7 @@ import { readFileSync } from 'fs';
 import { parse as dotenvParse, DotenvParseOutput } from 'dotenv';
 import Joi from '@hapi/joi';
 import { getEnvVariablesPath } from '@/helpers/shared.helper';
+import { EnvMode } from '@/typings/shared.typing';
 
 interface EnvConfig {
   PORT: string;
@@ -18,7 +19,7 @@ export class EnvService {
     }
 
     // first instance
-    const filePath = getEnvVariablesPath(process.env.NODE_ENV);
+    const filePath = getEnvVariablesPath(process.env.NODE_ENV as EnvMode);
     const config = dotenvParse(readFileSync(filePath));
 
     this.envConfig = this.validateInput(config);
@@ -45,5 +46,15 @@ export class EnvService {
   /** app port */
   get port(): number {
     return Number(this.envConfig.PORT);
+  }
+
+  /** environment */
+  get env(): EnvMode {
+    return process.env.NODE_ENV as EnvMode;
+  }
+
+  /** indicates if app running in development */
+  get inDevelopment(): boolean {
+    return this.env === 'development';
   }
 }

@@ -1,17 +1,26 @@
 {
-  "name": "first-example",
+  "name": "express-ts-boilerplate",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Express + TypeScript Boilerplate",
+  "main": "src/main.ts",
   "scripts": {
     "start": "rimraf build && tsc && cross-env NODE_ENV=production node ./build/main.js",
     "serve": "nodemon",
     "format": "prettier --write \"src/**/*.{ts,json,js}\"",
     "format:check": "prettier --check \"src/**/*.{ts,json,js}\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "express",
+    "ts",
+    "typescript",
+    "boilerplate"
+  ],
+  "author": {
+    "name": "Cristian Santiz",
+    "email": "crisantizan@gmail.com",
+    "url": "https://cristiansantiz.netlify.com"
+  },
+  "license": "MIT",
   "_moduleAliases": {
     "@": "build/"
   },

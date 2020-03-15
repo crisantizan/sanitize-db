@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc",
     "start": "rimraf build && tsc && cross-env NODE_ENV=production node ./build/main.js",
-    "serve": "nodemon"
+    "serve": "nodemon",
+    "format": "prettier --write \"src/**/*.{ts,json,js}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,json,js}\""
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "@types/helmet": "^0.0.45",
     "@types/morgan": "^1.9.0",
     "nodemon": "^2.0.2",
+    "prettier": "1.19.1",
     "rimraf": "^3.0.2",
     "ts-node": "^8.6.2",
     "ts-node-dev": "^1.0.0-pre.44",

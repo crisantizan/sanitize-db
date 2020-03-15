@@ -8,7 +8,7 @@ const { port, inDevelopment, env } = new EnvService();
 
 // settings
 app.set('port', port);
-app.set('environment', env)
+app.set('environment', env);
 // global middlewares
 app.use(express.json()).use(helmet());
 

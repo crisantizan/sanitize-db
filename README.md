@@ -2,7 +2,7 @@
 
 ### Prerequisites
 
-- Node@v10.x.x
+- Node v10.x.x
 
 ### Install
 

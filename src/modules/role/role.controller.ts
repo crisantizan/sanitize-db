@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Router } from 'express';
 import { Controller } from '@/typings/controller.typing';
 
-export class RolesController implements Controller {
+export default class RolesController implements Controller {
   public router: Router = Router();
   public route: string = '/roles';
 

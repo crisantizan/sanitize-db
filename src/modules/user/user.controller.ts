@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { Controller } from '@/typings/controller.typing';
 import { UsersService } from './user.service';
 
-export class UsersController implements Controller {
+export default class UsersController implements Controller {
   public router: Router = Router();
   public route: string = '/users';
   private usersService!: UsersService;

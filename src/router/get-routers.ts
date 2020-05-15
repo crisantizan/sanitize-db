@@ -23,7 +23,9 @@ function autoImport() {
       // browse folder, files inside of the current module
       const files = readdirSync(join(modulesPath, dirName));
       // get only the controller file
-      const controllerFile = files.filter(f => /\.controller\.ts$/.test(f))[0];
+      const controllerFile = files.filter(f =>
+        /.controller.[js|ts]{2}$/.test(f),
+      )[0];
 
       if (!controllerFile) {
         throw new Error(`Module ${dirName} doesn't have a controller file`);

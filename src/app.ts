@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, ErrorRequestHandler } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import compression from 'compression';
@@ -50,5 +50,18 @@ function shouldCompress(req: Request, res: Response) {
   // fallback to standard filter function
   return compression.filter(req, res);
 }
+
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  console.log(err);
+  // http status code
+  const httpStatus = err.status || err.statusCode || 500;
+
+  res
+    .status(httpStatus)
+    .json(err.body || err.message || 'Internal server error');
+};
+
+// global error handler
+app.use(errorHandler);
 
 export default app;

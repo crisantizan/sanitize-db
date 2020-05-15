@@ -8,22 +8,29 @@ function autoImport() {
   const modulesPath = join(__dirname, '..', 'modules');
 
   try {
-    const modulesFolder = readdirSync(modulesPath);
+    const modulesDir = readdirSync(modulesPath, { withFileTypes: true });
 
     const controllers: any[] = [];
 
-    modulesFolder.forEach(folder => {
+    modulesDir.forEach(dir => {
+      // only folders
+      if (dir.isFile()) {
+        return;
+      }
+
+      const dirName = dir.name;
+
       // browse folder, files inside of the current module
-      const files = readdirSync(join(modulesPath, folder));
+      const files = readdirSync(join(modulesPath, dirName));
       // get only the controller file
       const controllerFile = files.filter(f => /\.controller\.ts$/.test(f))[0];
 
       if (!controllerFile) {
-        throw new Error(`Module ${folder} doesn't have a controller file`);
+        throw new Error(`Module ${dirName} doesn't have a controller file`);
       }
 
       // import controller
-      const controller = require(`@/modules/${folder}/${controllerFile}`);
+      const controller = require(`@/modules/${dirName}/${controllerFile}`);
 
       if (!controller.default) {
         throw new Error(

@@ -1,26 +1,36 @@
 import { Request, Response } from 'express';
-import { Router } from 'express';
-import { Controller } from '@/typings/controller.typing';
-import { UsersService } from './user.service';
+import { IController, ControllerRoutes } from '@/typings/controller.typing';
+import { UserService } from './user.service';
+import { Controller } from '../controller';
 
-export default class UsersController implements Controller {
-  public router: Router = Router();
+class UserController extends Controller implements IController {
   public route: string = '/users';
-  private usersService!: UsersService;
 
-  constructor() {
-    this.usersService = new UsersService();
-    this.initRoutes();
+  constructor(private readonly _userService = new UserService()) {
+    super();
+    super.initRoutes(this.routes());
   }
 
   /**
    * important: use .bind(this) in all methods that you use
    */
-  public initRoutes() {
-    this.router.get('/', this.index.bind(this));
+  public async routes(): Promise<ControllerRoutes> {
+    return {
+      /** GET requests */
+      get: [
+        {
+          path: '/',
+          handler: this._index.bind(this),
+        },
+      ],
+    };
   }
 
-  public index(req: Request, res: Response) {
-    return res.json({ message: this.usersService.getAll() });
+  /** ------------------- HANDLERS ----------------- */
+
+  private _index(_: Request, res: Response) {
+    return res.json({ message: this._userService.getAll() });
   }
 }
+
+export default UserController;

@@ -6,6 +6,7 @@ import cors from 'cors';
 import router from '@/router';
 
 import { EnvService } from './services/env.service';
+import { transformResponsePipe } from '@/http/pipes/transform-response.pipe';
 
 const app = express();
 const { port, inDevelopment, env } = new EnvService();
@@ -23,6 +24,9 @@ app
 if (inDevelopment) {
   app.use(morgan('dev'));
 }
+
+// transform responses
+app.use(transformResponsePipe); // comment this if you don't use it
 
 // redirect from root to /api
 app.get('/', (_, res) => res.redirect('/api'));

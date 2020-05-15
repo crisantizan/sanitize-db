@@ -1,4 +1,4 @@
-import express, { Request, Response, ErrorRequestHandler } from 'express';
+import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import compression from 'compression';
@@ -6,7 +6,11 @@ import cors from 'cors';
 import router from '@/router';
 
 import { EnvService } from './services/env.service';
-import { transformResponsePipe } from '@/http/pipes/transform-response.pipe';
+import { transformResponsePipe } from '@/http/pipes';
+import {
+  shouldCompressMiddleware,
+  globalErrorHandlerMiddleware,
+} from '@/http/middlewares';
 
 const app = express();
 const { port, inDevelopment, env } = new EnvService();
@@ -18,7 +22,7 @@ app.set('environment', env);
 // global middlewares
 app
   .use(cors(), express.json())
-  .use(helmet(), compression({ filter: shouldCompress }));
+  .use(helmet(), compression({ filter: shouldCompressMiddleware }));
 
 // use only in development
 if (inDevelopment) {
@@ -32,7 +36,7 @@ app.use(transformResponsePipe); // comment this if you don't use it
 app.get('/', (_, res) => res.redirect('/api'));
 
 // this is innecesary, only for example
-app.get('/api', (req, res) => {
+app.get('/api', (_, res) => {
   // display available routes
   res.json(['/api/users', '/api/roles']);
 });
@@ -40,28 +44,7 @@ app.get('/api', (req, res) => {
 // set global prefix
 app.use('/api', router);
 
-/** allow decide when no compress the request */
-function shouldCompress(req: Request, res: Response) {
-  if (req.headers['x-no-compression']) {
-    // don't compress responses with this request header
-    return false;
-  }
-
-  // fallback to standard filter function
-  return compression.filter(req, res);
-}
-
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  console.log(err);
-  // http status code
-  const httpStatus = err.status || err.statusCode || 500;
-
-  res
-    .status(httpStatus)
-    .json(err.body || err.message || 'Internal server error');
-};
-
 // global error handler
-app.use(errorHandler);
+app.use(globalErrorHandlerMiddleware);
 
 export default app;

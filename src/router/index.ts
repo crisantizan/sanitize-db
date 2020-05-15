@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import routersGroup from './from-controller-to-route';
+import routers from './get-routers';
 
 // global router
 const rootRouter = Router();
 
-// inject routes group in express
-routersGroup.forEach(({ route, router }) => {
+// inject routes in express
+routers.forEach(({ route, router }) => {
   rootRouter.use(route, router);
 });
 

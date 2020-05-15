@@ -1,7 +1,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import router from '@/routes/router';
+import router from '@/router';
 
 import { EnvService } from './services/env.service';
 

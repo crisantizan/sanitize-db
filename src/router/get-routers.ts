@@ -2,7 +2,7 @@ import controllers from './register-controllers';
 import { ControllerRouteProps } from '@/typings/shared.typing';
 
 /** extract only route props */
-function fromControllerToRoute(controllers: any): ControllerRouteProps[] {
+function getRouters(controllers: any): ControllerRouteProps[] {
   return controllers.map((Controller: any) => {
     const instance: ControllerRouteProps = new Controller();
 
@@ -11,4 +11,4 @@ function fromControllerToRoute(controllers: any): ControllerRouteProps[] {
   });
 }
 
-export default fromControllerToRoute(controllers);
+export default getRouters(controllers);

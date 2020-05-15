@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { HttpStatus } from '@/common/enums';
 
 /** environment mode */
 export type EnvMode = 'development' | 'production';
@@ -7,4 +8,16 @@ export type EnvMode = 'development' | 'production';
 export interface ControllerRouteProps {
   route: string;
   router: Router;
+}
+
+/** props to return (for every field) when error has ocurred in a field */
+export interface ErrorFieldObject {
+  field: string;
+  message: string;
+}
+
+/** properties to return by a service http */
+export interface ServiceResponse<T> {
+  code: HttpStatus;
+  response: T;
 }

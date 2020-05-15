@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import compression from 'compression';
+import cors from 'cors';
 import router from '@/router';
 
 import { EnvService } from './services/env.service';
@@ -14,7 +15,9 @@ app.set('port', port);
 app.set('environment', env);
 
 // global middlewares
-app.use(express.json()).use(helmet(), compression({ filter: shouldCompress }));
+app
+  .use(cors(), express.json())
+  .use(helmet(), compression({ filter: shouldCompress }));
 
 // use only in development
 if (inDevelopment) {

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Router } from 'express';
 import { Controller } from '@/typings/controller.typing';
-import { UsersService } from './users.service';
+import { UsersService } from './user.service';
 
 export class UsersController implements Controller {
   public router: Router = Router();

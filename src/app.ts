@@ -21,8 +21,11 @@ if (inDevelopment) {
   app.use(morgan('dev'));
 }
 
+// redirect from root to /api
+app.get('/', (_, res) => res.redirect('/api'));
+
 // this is innecesary, only for example
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   // display available routes
   res.json(['/api/users', '/api/roles']);
 });

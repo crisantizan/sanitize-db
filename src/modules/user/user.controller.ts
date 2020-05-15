@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { IController, ControllerRoutes } from '@/typings/controller.typing';
 import { UserService } from './user.service';
 import { Controller } from '../controller';
+import { validationPipe } from '@/http/pipes/validation.pipe';
+import { userCreateSchema } from '@/common/joi-schemas';
 
 class UserController extends Controller implements IController {
   public route: string = '/users';
@@ -23,13 +25,31 @@ class UserController extends Controller implements IController {
           handler: this._index.bind(this),
         },
       ],
+      /** POST requests */
+      post: [
+        {
+          path: '/',
+          middlewares: [await validationPipe(userCreateSchema)],
+          handler: this._createUser.bind(this),
+        },
+      ],
     };
   }
 
   /** ------------------- HANDLERS ----------------- */
 
   private _index(_: Request, res: Response) {
-    return res.json({ message: this._userService.getAll() });
+    const result = this._userService.getAll();
+
+    return this.sendResponse(result, res);
+  }
+
+  /** create a new user */
+  private _createUser({ body }: Request, res: Response) {
+    const result = this._userService.create(body);
+
+    // send customized response easily
+    return this.sendResponse(result, res);
   }
 }
 

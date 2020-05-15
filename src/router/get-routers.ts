@@ -1,6 +1,6 @@
 import { readdirSync } from 'fs';
 import { join } from 'path';
-import { ControllerRouteProps } from '@/typings/shared.typing';
+import { ControllerRouteProps } from '@/typings/shared.type';
 
 /** auto import controllers */
 function autoImport() {

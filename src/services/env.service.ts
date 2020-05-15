@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { parse as dotenvParse, DotenvParseOutput } from 'dotenv';
 import Joi from '@hapi/joi';
 import { getEnvVariablesPath } from '@/helpers/shared.helper';
-import { EnvMode } from '@/typings/shared.typing';
+import { EnvMode } from '@/typings/shared.type';
 
 interface EnvConfig {
   PORT: string;

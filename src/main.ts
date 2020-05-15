@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'production') {
 import app from '@/app';
 import { config } from 'dotenv';
 import { getEnvVariablesPath } from '@/helpers/shared.helper';
-import { EnvMode } from './typings/shared.typing';
+import { EnvMode } from './typings/shared.type';
 
 // load environment variables according to mode
 config({

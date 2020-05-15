@@ -1,7 +1,7 @@
 import { Service } from '@/services/service';
 import { HttpStatus } from '@/common/enums';
 import { UserCreate } from './user.type';
-import { ServiceResponse } from '@/typings/shared.typing';
+import { ServiceResponse } from '@/typings/shared.type';
 
 export class UserService extends Service {
   // repository here

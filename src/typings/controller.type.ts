@@ -1,5 +1,5 @@
 import { Router, RequestHandler } from 'express';
-import { Index } from './shared.typing';
+import { Index } from './shared.type';
 
 // /** methods and props that all controllers they should have */
 // export interface Controller {

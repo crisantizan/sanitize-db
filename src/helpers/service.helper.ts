@@ -1,4 +1,4 @@
-import { ServiceResponse } from '@/typings/shared.typing';
+import { ServiceResponse } from '@/typings/shared.type';
 import { HttpStatus } from '@/common/enums';
 
 /** generate properties to return by a service http */

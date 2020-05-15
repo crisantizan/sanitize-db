@@ -1,5 +1,5 @@
 import { HttpStatus } from '@/common/enums';
-import { ServiceResponse } from '@/typings/shared.typing';
+import { ServiceResponse } from '@/typings/shared.type';
 import { serviceResponse } from '@/helpers/service.helper';
 
 /** shared methods to services */

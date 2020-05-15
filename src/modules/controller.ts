@@ -1,8 +1,8 @@
 import { Response, Router } from 'express';
-import { ServiceResponse } from '@/typings/shared.typing';
+import { ServiceResponse } from '@/typings/shared.type';
 import { HttpStatus } from '@/common/enums';
-import { ControllerRoutes } from '@/typings/controller.typing';
-import { HttpMethodType } from '@/typings/http.typing';
+import { ControllerRoutes } from '@/typings/controller.type';
+import { HttpMethodType } from '@/typings/http.type';
 import { HttpMethod } from '@/common/enums/http-methods.enum';
 
 /** shared methods to controllers */

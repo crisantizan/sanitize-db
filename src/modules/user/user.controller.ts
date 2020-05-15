@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IController, ControllerRoutes } from '@/typings/controller.typing';
+import { IController, ControllerRoutes } from '@/typings/controller.type';
 import { UserService } from './user.service';
 import { Controller } from '../controller';
 import { validationPipe } from '@/http/pipes/validation.pipe';

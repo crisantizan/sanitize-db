@@ -1,4 +1,4 @@
-import { EnvMode, ErrorFieldObject } from '@/typings/shared.typing';
+import { EnvMode, ErrorFieldObject } from '@/typings/shared.type';
 import { join as joinPath } from 'path';
 
 /** get envirironment variables path */

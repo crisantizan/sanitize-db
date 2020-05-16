@@ -21,7 +21,7 @@ This project is my personal boilerplate to develop express applications with Typ
 ### `Install`
 
 ```bash
-$ git clone https://github.com/crisantizan/express-ts-boilerplate
+$ git clone https://github.com/crisantizan/express-ts-boilerplate.git
 $ cd express-ts-boilerplate
 $ yarn # or npm install
 ```
@@ -92,6 +92,8 @@ Folder that contains files to manage request and responses of your rest api. Eac
 
   Router that handle and manage all http requests of an specific endpoint with direct communication with services. See an <a href="https://github.com/crisantizan/express-ts-boilerplate/blob/master/src/modules/user/user.controller.ts" target="_blank">example file</a>.
 
+  MANDATORY: The name should be contains ".controller" in his name, before file extension: "user.controller.ts", "role.controller.ts", etc.
+
 - `service`
 
   Receive the input data and decide what to do with it: save, get, delete or update in database, or make that you like. These always they should a return something. See an <a href="https://github.com/crisantizan/express-ts-boilerplate/blob/master/src/modules/user/user.service.ts" target="_blank">example file</a>.
@@ -101,5 +103,25 @@ Folder that contains files to manage request and responses of your rest api. Eac
   Typescript types for this module
 
 In the root of modules folder there is a file single, "controller.ts". This is the main controller, of which the rest will be extended and they will inherit his methods and properties.
+
+#### `router`
+
+This folder is responsible of manage all routes of your project, importing each controller that you have define. Here will there is two files:
+
+- `get-routers.ts`
+
+  Auto import all controllers and return the instance of each one.
+
+- `index.ts`
+
+  Get controller instances and push it to the express router, file that after will be used in "app.ts" as middleware.
+
+#### `services`
+
+This is where the global services used in any file are located, not specifically linked to any other like as the modules services.
+
+### `typings`
+
+Files only related with Typescript: interfaces, types etc.
 
 <p align="center">Cristian Santiz, 2020</p>

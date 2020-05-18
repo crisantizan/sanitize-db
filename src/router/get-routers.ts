@@ -3,7 +3,7 @@ import { join } from 'path';
 import { ControllerRouteProps } from '@/typings/shared.type';
 
 /** auto import controllers */
-function autoImport() {
+async function getControllers(): Promise<any[]> {
   // path of modules folder
   const modulesPath = join(__dirname, '..', 'modules');
 
@@ -12,10 +12,10 @@ function autoImport() {
 
     const controllers: any[] = [];
 
-    modulesDir.forEach(dir => {
+    for (const dir of modulesDir) {
       // only folders
       if (dir.isFile()) {
-        return;
+        continue;
       }
 
       const dirName = dir.name;
@@ -32,8 +32,7 @@ function autoImport() {
       }
 
       // import controller
-      const controller = require(`@/modules/${dirName}/${controllerFile}`);
-
+      const controller = await import(`@/modules/${dirName}/${controllerFile}`);
       if (!controller.default) {
         throw new Error(
           'Controllers should be exported by: export default, no custom names',
@@ -41,7 +40,7 @@ function autoImport() {
       }
 
       controllers.push(controller.default);
-    });
+    }
     return controllers;
   } catch (error) {
     throw error;
@@ -49,7 +48,9 @@ function autoImport() {
 }
 
 /** extract only route props */
-function getRouters(controllers: any[]): ControllerRouteProps[] {
+export async function getRouters(): Promise<ControllerRouteProps[]> {
+  const controllers = await getControllers();
+
   return controllers.map((Controller: any) => {
     const instance: ControllerRouteProps = new Controller();
 
@@ -57,5 +58,3 @@ function getRouters(controllers: any[]): ControllerRouteProps[] {
     return { route: instance.route, router: instance.router };
   });
 }
-
-export default getRouters(autoImport());

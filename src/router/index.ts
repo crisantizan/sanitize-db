@@ -1,12 +1,15 @@
 import { Router } from 'express';
-import routers from './get-routers';
+import { getRouters } from './get-routers';
 
 // global router
 const rootRouter = Router();
 
-// inject routes in express
-routers.forEach(({ route, router }) => {
-  rootRouter.use(route, router);
-});
+(async () => {
+  const routers = await getRouters();
+  // inject routes in express
+  routers.forEach(({ route, router }) => {
+    rootRouter.use(route, router);
+  });
+})();
 
 export default rootRouter;

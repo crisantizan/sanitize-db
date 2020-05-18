@@ -8,11 +8,12 @@ export function transformResponsePipe(
 ) {
   const { json } = res;
 
+  const { path } = req;
+
   res.json = function(body) {
-    const [method, timestamp, path, status, response] = [
+    const [method, timestamp, status, response] = [
       req.method,
       new Date(),
-      req.path,
       res.statusCode,
       body,
     ];

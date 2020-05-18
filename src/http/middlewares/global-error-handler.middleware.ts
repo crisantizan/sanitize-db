@@ -6,6 +6,9 @@ export const globalErrorHandlerMiddleware: ErrorRequestHandler = (
   res,
   next,
 ) => {
+  if (!err) {
+    return next();
+  }
   // http status code
   const httpStatus = err.status || err.statusCode || 500;
 

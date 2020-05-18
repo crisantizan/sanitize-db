@@ -11,6 +11,7 @@ import {
   shouldCompressMiddleware,
   globalErrorHandlerMiddleware,
 } from '@/http/middlewares';
+import { HttpStatus } from './common/enums';
 
 const app = express();
 const { port, inDevelopment, env } = new EnvService();
@@ -32,19 +33,26 @@ if (inDevelopment) {
 // transform responses
 app.use(transformResponsePipe); // comment this if you don't use it
 
+// global error handler
+app.use(globalErrorHandlerMiddleware);
+
 // redirect from root to /api
 app.get('/', (_, res) => res.redirect('/api'));
 
 // this is innecesary, only for example
 app.get('/api', (_, res) => {
   // display available routes
-  res.json(['/api/users', '/api/roles']);
+  res.json({
+    availableRoutes: ['/api/users'],
+  });
 });
 
 // set global prefix
 app.use('/api', router);
 
-// global error handler
-app.use(globalErrorHandlerMiddleware);
+// not found path
+app.use('*', (_, res) => {
+  res.status(HttpStatus.NOT_FOUND).json('Path not available');
+});
 
 export default app;

@@ -16,11 +16,12 @@ import { HttpStatus } from './common/enums';
 const app = express();
 const { port, inDevelopment, env } = new EnvService();
 
-// settings
+/** -------------------- SETTINGS -------------------- */
 app.set('port', port);
 app.set('environment', env);
 
-// global middlewares
+/** -------------- GLOBAL MIDDLEWARES --------------- */
+
 app
   .use(cors(), express.json())
   .use(helmet(), compression({ filter: shouldCompressMiddleware }));
@@ -36,6 +37,8 @@ app.use(transformResponsePipe); // comment this if you don't use it
 // global error handler
 app.use(globalErrorHandlerMiddleware);
 
+/** -------------------- ROUTER -------------------- */
+
 // redirect from root to /api
 app.get('/', (_, res) => res.redirect('/api'));
 
@@ -43,11 +46,11 @@ app.get('/', (_, res) => res.redirect('/api'));
 app.get('/api', (_, res) => {
   // display available routes
   res.json({
-    availableRoutes: ['/api/users'],
+    availableRoutes: ['GET /api/users'],
   });
 });
 
-// set global prefix
+// set global prefix and use all routes
 app.use('/api', router);
 
 // not found path

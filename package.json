@@ -1,7 +1,7 @@
 {
-  "name": "express-ts-boilerplate",
+  "name": "sanitize-db",
   "version": "1.0.0",
-  "description": "Express + TypeScript Boilerplate",
+  "description": "Sanitize databases",
   "main": "src/main.ts",
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./build/main.js",

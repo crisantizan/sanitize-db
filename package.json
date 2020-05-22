@@ -6,10 +6,12 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./build/main.js",
     "serve": "nodemon",
-    "build": "rimraf build && tsc && npm run copy:assets",
+    "build": "rimraf build && tsc && npm run copy:public && npm run copy:views && npm run copy:assets",
     "format": "prettier --write \"src/**/*.{ts,json,js}\"",
     "format:check": "prettier --check \"src/**/*.{ts,json,js}\"",
-    "copy:assets": "cpx 'src/assets/**' 'build/assets'"
+    "copy:public": "copyfiles -f src/public/** build/public && echo Copied public folder",
+    "copy:views": "copyfiles -f src/views/** build/views && echo Copied views folder",
+    "copy:assets": "copyfiles -f src/assets/** build/assets && echo Copied assets folder"
   },
   "keywords": [
     "express",
@@ -33,7 +35,6 @@
     "@types/hapi__joi": "^16.0.12",
     "@types/helmet": "^0.0.45",
     "@types/morgan": "^1.9.0",
-    "cpx": "^1.5.0",
     "nodemon": "^2.0.2",
     "prettier": "1.19.1",
     "rimraf": "^3.0.2",
@@ -45,6 +46,7 @@
     "@hapi/joi": "^17.1.1",
     "@types/serve-favicon": "^2.5.0",
     "compression": "^1.7.4",
+    "copyfiles": "^2.2.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",

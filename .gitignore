@@ -118,4 +118,7 @@ temp/
 # Ignore all local history of files
 .history
 
+# uploads folder
+src/uploads/
+
 # End of https://www.gitignore.io/api/node,visualstudiocode

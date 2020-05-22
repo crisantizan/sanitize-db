@@ -43,12 +43,12 @@ if (inDevelopment) {
 // transform responses
 app.use(transformResponsePipe); // comment this if you don't use it
 
-// global error handler
-app.use(globalErrorHandlerMiddleware);
-
 /** -------------------- ROUTER -------------------- */
 
 app.use(router);
+
+// global error handler
+app.use(globalErrorHandlerMiddleware);
 
 // not found path
 app.use('*', (_, res) => {

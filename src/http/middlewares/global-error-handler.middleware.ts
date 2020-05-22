@@ -1,3 +1,4 @@
+import { EnvService } from '@/services/env.service';
 import { ErrorRequestHandler } from 'express';
 
 export const globalErrorHandlerMiddleware: ErrorRequestHandler = (
@@ -9,6 +10,11 @@ export const globalErrorHandlerMiddleware: ErrorRequestHandler = (
   if (!err) {
     return next();
   }
+
+  if (new EnvService().inDevelopment) {
+    console.error(err);
+  }
+
   // http status code
   const httpStatus = err.status || err.statusCode || 500;
 

@@ -1,4 +1,4 @@
-import multer from 'multer';
+import multer, { Options } from 'multer';
 import { extname } from 'path';
 import { generatePath } from '@/helpers/generate-path.helper';
 
@@ -8,10 +8,20 @@ const storage = multer.diskStorage({
     const extension = extname(file.originalname);
     const name = Date.now();
 
+    console.log(file.mimetype);
+
     cb(null, `${name}${extension}`);
   },
 });
 
+const fileFilter: Options['fileFilter'] = (req, file, cb) => {
+  if (file.mimetype !== 'text/plain') {
+    return cb(new Error('Only text plain files'));
+  }
+
+  cb(null, true);
+};
+
 export function uploaderMiddleware() {
-  return multer({ storage });
+  return multer({ storage, fileFilter });
 }

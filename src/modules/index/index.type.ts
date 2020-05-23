@@ -1,1 +1,4 @@
-export interface BodyUploadFile {}
+export interface AnalizeFileColumns {
+  filename: string;
+  keyword: string;
+}

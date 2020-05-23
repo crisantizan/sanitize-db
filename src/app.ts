@@ -40,15 +40,15 @@ if (inDevelopment) {
   app.use(morgan('dev'));
 }
 
+/** -------------------- ROUTER -------------------- */
+
 // transform responses
 app.use(transformResponsePipe); // comment this if you don't use it
 
-/** -------------------- ROUTER -------------------- */
-
-app.use(router);
-
-// global error handler
-app.use(globalErrorHandlerMiddleware);
+app
+  .use(router)
+  // global error handler
+  .use(globalErrorHandlerMiddleware);
 
 // not found path
 app.use('*', (_, res) => {

@@ -8,8 +8,6 @@ const storage = multer.diskStorage({
     const extension = extname(file.originalname);
     const name = Date.now();
 
-    console.log(file.mimetype);
-
     cb(null, `${name}${extension}`);
   },
 });

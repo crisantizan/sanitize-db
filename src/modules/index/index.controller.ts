@@ -3,6 +3,8 @@ import { ControllerRoutes } from '@/typings/controller.type';
 import { Request, Response } from 'express';
 import { IndexService } from './index.service';
 import { uploaderMiddleware } from '@/http/middlewares/uploader.middleware';
+import { validationPipe } from '@/http/pipes/validation.pipe';
+import { analyzeFileSchema } from '@/common/joi-schemas';
 
 export default class IndexController extends Controller {
   public route: string = '/';
@@ -26,6 +28,11 @@ export default class IndexController extends Controller {
           middlewares: [uploaderMiddleware().single('file')],
           handler: this._uploadFile.bind(this),
         },
+        {
+          path: '/analyze-file',
+          middlewares: [await validationPipe(analyzeFileSchema)],
+          handler: this._analyzeFileColumns.bind(this),
+        },
       ],
     };
   }
@@ -36,9 +43,20 @@ export default class IndexController extends Controller {
   }
 
   /** ------------------ API ------------------ */
+
   private _uploadFile({ file }: Request, res: Response) {
     try {
-      const result = this._indexService.analizeFile(file);
+      const result = this._indexService.analyzeFileContent(file);
+      this.sendResponse(result, res);
+    } catch (error) {
+      this.handleError(error, res);
+    }
+  }
+
+  /** analyze columns and return fields amount */
+  private async _analyzeFileColumns(req: Request, res: Response) {
+    try {
+      const result = await this._indexService.analyzeFileColumns(req.body);
       this.sendResponse(result, res);
     } catch (error) {
       this.handleError(error, res);

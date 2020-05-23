@@ -26,3 +26,6 @@ export interface ServiceResponse<T> {
   code: HttpStatus;
   response: T;
 }
+
+/** multer file */
+export type MulterFile = Express.Multer.File;

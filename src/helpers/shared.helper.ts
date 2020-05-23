@@ -13,3 +13,7 @@ export function errorFieldObject(
 ): ErrorFieldObject {
   return { field, message };
 }
+
+export function escapeRegExp(string: string) {
+  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
+}

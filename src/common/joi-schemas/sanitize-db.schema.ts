@@ -5,10 +5,11 @@ import { SanitizeDB } from '@/modules/index/index.type';
 export const sanitizeDBSchema = joi.object<SanitizeDB>({
   columns: joi
     .array()
-    .items(joi.string())
+    .items(joi.string().required())
     .required(),
   filter: joi
     .array()
-    .items(joi.string())
+    .items(joi.string().required())
     .required(),
+  filename: joi.string().required(),
 });

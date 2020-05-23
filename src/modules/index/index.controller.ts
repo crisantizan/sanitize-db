@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { IndexService } from './index.service';
 import { uploaderMiddleware } from '@/http/middlewares/uploader.middleware';
 import { validationPipe } from '@/http/pipes/validation.pipe';
-import { analyzeFileSchema } from '@/common/joi-schemas';
+import { analyzeFileSchema, sanitizeDBSchema } from '@/common/joi-schemas';
 
 export default class IndexController extends Controller {
   public route: string = '/';
@@ -32,6 +32,11 @@ export default class IndexController extends Controller {
           path: '/analyze-file',
           middlewares: [await validationPipe(analyzeFileSchema)],
           handler: this._analyzeFileColumns.bind(this),
+        },
+        {
+          path: '/sanitize-db',
+          middlewares: [await validationPipe(sanitizeDBSchema)],
+          handler: this._sanitizeDB.bind(this),
         },
       ],
     };
@@ -61,5 +66,9 @@ export default class IndexController extends Controller {
     } catch (error) {
       this.handleError(error, res);
     }
+  }
+
+  private async _sanitizeDB(req: Request, res: Response) {
+    res.status(200).json(req.body);
   }
 }

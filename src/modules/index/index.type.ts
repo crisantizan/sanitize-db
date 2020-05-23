@@ -8,4 +8,5 @@ export interface SanitizeDB {
   columns: string[];
   /* column names to filter */
   filter: string[];
+  filename: string;
 }

@@ -2,8 +2,8 @@ import { readFileSync, pathExists } from 'fs-extra';
 import { Service } from '@/services/service';
 import { HttpStatus } from '@/common/enums';
 
-import { MulterFile } from '@/typings/shared.type';
-import { AnalizeFileColumns } from './index.type';
+import { MulterFile, Index } from '@/typings/shared.type';
+import { AnalizeFileColumns, SanitizeDB } from './index.type';
 import { generatePath } from '@/helpers/generate-path.helper';
 import { escapeRegExp } from '@/helpers/shared.helper';
 
@@ -35,16 +35,12 @@ export class IndexService extends Service {
 
   /** analyze columns and return fields amount */
   public async analyzeFileColumns({ filename, keyword }: AnalizeFileColumns) {
-    const path = generatePath('uploads', filename);
-
     try {
-      if (!(await pathExists(path))) {
-        throw this.response(HttpStatus.NOT_FOUND, 'Database file not found');
-      }
+      const path = await this._validateAndGeneratePath(filename);
 
       const content = readFileSync(path, { flag: 'r', encoding: 'utf-8' });
       // get columns
-      const columns = content.split('\n');
+      const columns = content.split('\r\n');
       let length = 0;
 
       // escape keyword
@@ -72,5 +68,55 @@ export class IndexService extends Service {
       console.error(error);
       throw error;
     }
+  }
+
+  public async sanitizeDB({ columns, filter, filename, keyword }: SanitizeDB) {
+    try {
+      const path = await this._validateAndGeneratePath(filename);
+      const content = readFileSync(path, { flag: 'r', encoding: 'utf-8' });
+
+      // get columns
+      const rows = content.split('\r\n');
+
+      const sanitized: any[] = [];
+
+      let index = 0;
+      for (let row of rows) {
+        // remove last keyword if there's
+        row = row.replace(new RegExp(`${escapeRegExp(keyword)}$`), '');
+
+        const fields = row.split(keyword);
+
+        // new object
+        const obj: Index<string> = {};
+
+        columns.forEach((value, idx) => {
+          // get only filtered fields
+          if (filter.some(v => v === value)) {
+            obj[value] = fields[idx] || '';
+          }
+        });
+
+        // add
+        sanitized[index] = obj;
+
+        index++;
+      }
+
+      return this.response(HttpStatus.OK, sanitized);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  private async _validateAndGeneratePath(filename: string) {
+    const path = generatePath('uploads', filename);
+
+    if (!(await pathExists(path))) {
+      throw this.response(HttpStatus.NOT_FOUND, 'Database file not found');
+    }
+
+    return path;
   }
 }

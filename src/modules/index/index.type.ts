@@ -3,10 +3,9 @@ export interface AnalizeFileColumns {
   keyword: string;
 }
 
-export interface SanitizeDB {
+export interface SanitizeDB extends AnalizeFileColumns {
   /* column names */
   columns: string[];
   /* column names to filter */
   filter: string[];
-  filename: string;
 }

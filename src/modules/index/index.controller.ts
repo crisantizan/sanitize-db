@@ -69,6 +69,11 @@ export default class IndexController extends Controller {
   }
 
   private async _sanitizeDB(req: Request, res: Response) {
-    res.status(200).json(req.body);
+    try {
+      const result = await this._indexService.sanitizeDB(req.body);
+      this.sendResponse(result, res);
+    } catch (error) {
+      this.handleError(error, res);
+    }
   }
 }

@@ -12,4 +12,5 @@ export const sanitizeDBSchema = joi.object<SanitizeDB>({
     .items(joi.string().required())
     .required(),
   filename: joi.string().required(),
+  keyword: joi.string().required(),
 });

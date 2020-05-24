@@ -1,4 +1,4 @@
-import { readFileSync, pathExists } from 'fs-extra';
+import { readFileSync, pathExists, writeJSON, unlinkSync } from 'fs-extra';
 import { Service } from '@/services/service';
 import { HttpStatus } from '@/common/enums';
 
@@ -103,7 +103,13 @@ export class IndexService extends Service {
         index++;
       }
 
-      return this.response(HttpStatus.OK, sanitized);
+      const jsonFile = `${Date.now()}.json`;
+      // create JSON file
+      await writeJSON(generatePath('public', jsonFile), sanitized);
+      // remove txt file
+      unlinkSync(path);
+
+      return this.response(HttpStatus.OK, { jsonFile });
     } catch (error) {
       console.error(error);
       throw error;

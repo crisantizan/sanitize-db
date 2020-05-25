@@ -6,10 +6,11 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./build/main.js",
     "serve": "nodemon",
-    "build": "rimraf build && tsc && npm run copy:public && npm run copy:views && npm run copy:assets",
+    "build": "rimraf build && tsc",
+    "postbuild": "npm run copy:public && npm run copy:views && npm run copy:assets",
     "format": "prettier --write \"src/**/*.{ts,json,js}\"",
     "format:check": "prettier --check \"src/**/*.{ts,json,js}\"",
-    "copy:public": "copyfiles -f src/public/** build/public && echo Copied public folder",
+    "copy:public": "copyfiles -e \"**/*.ts\" -u 2 src/public/**/* build/public && echo Copied public folder",
     "copy:views": "copyfiles -f src/views/** build/views && echo Copied views folder",
     "copy:assets": "copyfiles -f src/assets/** build/assets && echo Copied assets folder"
   },

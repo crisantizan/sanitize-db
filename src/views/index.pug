@@ -3,5 +3,15 @@ html(lang="es")
   include includes/_head.pug
   body
     section.container
-      include includes/_form.pug
+      h2.title Sanitize database
+      h3.step-text Paso #[span 1] de #[span 4]
+      .stepper
+        .step.active
+          include includes/step-1.pug
+        .step
+          include includes/step-2.pug
+        .step
+          include includes/step-3.pug
+        .step
+          include includes/step-4.pug
     include includes/_script.pug

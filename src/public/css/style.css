@@ -10,6 +10,18 @@
   padding: 1rem;
 }
 
+.stepper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.stepper .step:not(.active) {
+  display: none;
+}
+
 .title {
   text-align: center;
 }
@@ -18,13 +30,6 @@
   text-align: end;
 }
 
-.form {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-}
 
 .form button {
   margin-top: .5rem;

@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+:root {
+  --color-primary: darkgreen;
+  --color-secondary: rgb(151, 7, 218);
+}
+
 .container {
   max-width: 550px;
   margin: 0 auto;
@@ -38,8 +43,8 @@
 .btn {
   background-color: transparent;
   border-radius: 5px;
-  border: 1px solid darkgreen;
   display: inline-block;
+  border: 1px solid darkgreen;
   color: darkgreen;
   font-family: Arial;
   font-size: 14px;
@@ -53,6 +58,11 @@
   cursor: pointer;
 }
 
+.btn.secondary {
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary);
+}
+
 .btn:active {
   position: relative;
   top: 1px;
@@ -62,4 +72,9 @@
   border: none;
   background-color: rgba(0, 0, 0, 0.2);
   color: grey;
+}
+
+.btn.btn-small {
+  font-size: 12px;
+  padding: .2rem;
 }

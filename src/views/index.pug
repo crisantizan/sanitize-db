@@ -4,7 +4,7 @@ html(lang="es")
   body
     section.container
       h2.title Sanitize database
-      h3.step-text Paso #[span 1] de #[span 4]
+      h3.step-text Paso #[span(id="stepLabel")] de #[span 4]
       .stepper
         .step.active
           include includes/step-1.pug
@@ -14,4 +14,7 @@ html(lang="es")
           include includes/step-3.pug
         .step
           include includes/step-4.pug
+      .controls
+        button(type="button", class="btn btn-small", id="prevBtn") Prev
+        button(type="button", class="btn btn-small secondary", id="nextBtn") Next
     include includes/_script.pug

@@ -5,16 +5,6 @@ const stepLabel = document.getElementById('stepLabel');
 
 let activeIndexStep = 0;
 
-/** read file to upload */
-function readURL({ target }) {
-  if (!target.files.length) {
-    return;
-  }
-
-  const file = target.files[0];
-  const reader = new FileReader();
-}
-
 /** update step label */
 function updateLabel(step) {
   stepLabel.textContent = step;
@@ -49,6 +39,38 @@ prevBtn.addEventListener('click', e => {
   updateLabel(activeIndexStep + 1);
 });
 
+/** ------------------- STEP 1 ----------------------- */
+
+function step1() {
+  const uploader = document.getElementById('uploader');
+  const form = document.getElementById('formStep1');
+  let disabled = true;
+
+  uploader.addEventListener('change', e => {
+    const { target } = e;
+
+    if (!target.files.length) return;
+
+    // only .txt files
+    if (target.type !== 'text/plain') {
+      window.alert('Solo archivos planos [.txt]');
+      return (target.value = null);
+    }
+
+    const file = target.files[0];
+
+    console.log({ file });
+  });
+
+  form.addEventListener('submit', e => {
+    if (disabled) {
+      return e.preventDefault();
+    };
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function(event) {
   stepLabel.textContent = activeIndexStep + 1;
+
+  step1();
 });

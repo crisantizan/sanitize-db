@@ -162,6 +162,16 @@
   dependencies:
     "@types/express" "*"
 
+"@types/mysql2@types/mysql2":
+  version "1.0.0"
+  resolved "https://codeload.github.com/types/mysql2/tar.gz/b549352cda0b83fe8c4f4c11a1b4beb0b0cb0f5d"
+  dependencies:
+    "@types/mysql" types/mysql
+
+"@types/mysql@types/mysql":
+  version "2.0.0"
+  resolved "https://codeload.github.com/types/mysql/tar.gz/41e381415afbb79452c0501ca3cf220c2cd390bc"
+
 "@types/node@*":
   version "14.0.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.1.tgz#5d93e0a099cd0acd5ef3d5bde3c086e1f49ff68c"

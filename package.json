@@ -38,6 +38,7 @@
     "@types/helmet": "^0.0.45",
     "@types/morgan": "^1.9.0",
     "@types/multer": "^1.4.3",
+    "@types/mysql2": "types/mysql2",
     "@types/serve-favicon": "^2.5.0",
     "nodemon": "^2.0.2",
     "prettier": "1.19.1",

@@ -4,7 +4,7 @@ const prevBtn = document.getElementById('prevBtn');
 const stepLabel = document.getElementById('stepLabel');
 const backdrop = document.getElementById('backdrop');
 
-let activeIndexStep = 0;
+let activeIndexStep = 1;
 /** filename returned by backed */
 let backendFilename = null;
 

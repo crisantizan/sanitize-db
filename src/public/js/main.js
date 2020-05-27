@@ -381,10 +381,55 @@ function step3() {
   });
 }
 
+/** ------------------- STEP 4 ----------------------- */
+
+function step4() {
+  const btn = document.getElementById('saveBtn');
+
+  btn.addEventListener('click', async () => {
+    if (!jsonFile) {
+      return alert('No se ha seleccionado el archivo JSON a guardar');
+    }
+
+    // execute
+    const body = { filename: jsonFile };
+
+    try {
+      toggleBackdrop();
+      const result = await fetch('/save-file', {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify(body),
+      });
+
+      if (!result.ok) {
+        throw await result.json();
+      }
+
+      // true
+      await result.json();
+
+      toggleBackdrop();
+
+      alert('¡Bien, archivos salvados!');
+      // go to home
+      window.location.href = '/';
+    } catch (error) {
+      toggleBackdrop();
+      console.error(error);
+      alert(error.response);
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   stepLabel.textContent = activeIndexStep + 1;
 
   step1();
   step2();
   step3();
+  step4();
 });

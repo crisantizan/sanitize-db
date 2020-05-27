@@ -10,7 +10,8 @@
   --color-secondary: rgb(151, 7, 218);
 }
 
-input, select {
+input,
+select {
   font-size: 14px;
   padding: 0.5rem;
 }
@@ -19,7 +20,7 @@ ol {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 
   list-style: none;
   counter-reset: li;
@@ -34,7 +35,7 @@ ol li::before {
   counter-increment: li;
   content: counter(li);
   color: grey;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
   font-size: 16px;
 }
 
@@ -68,6 +69,11 @@ ol li::before {
   padding: 1rem;
 }
 
+.step {
+  display: flex;
+  flex-direction: column;
+}
+
 .stepper .step:not(.active) {
   display: none;
 }
@@ -90,7 +96,7 @@ ol li::before {
   font-size: 14px;
   padding: 0.5rem;
   text-decoration: none;
-  transition: all ease .3s;
+  transition: all ease 0.3s;
 }
 
 .btn:not(.disabled):hover {
@@ -132,13 +138,13 @@ form {
 }
 
 .step-1 .form-step-1 input {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 /* ----- STEP 2 ----- */
 
 .step-2 form {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .step-2 .form-step-2 button {
@@ -156,7 +162,7 @@ form {
 }
 
 .step-3 h4 {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   text-align: center;
 }
 
@@ -165,13 +171,20 @@ form {
 }
 
 .step-3 input {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .step-3 .select-columns {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .step-3 button {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
+}
+
+/* ----- STEP 4 ----- */
+
+.step-4 p,
+.step-4 button {
+  margin-top: 0.5rem;
 }

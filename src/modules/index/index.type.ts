@@ -3,6 +3,10 @@ export interface AnalizeFileColumns {
   keyword: string;
 }
 
+export interface SaveFileData {
+  filename: string;
+}
+
 export interface SanitizeDB extends AnalizeFileColumns {
   /* column names */
   columns: string[];

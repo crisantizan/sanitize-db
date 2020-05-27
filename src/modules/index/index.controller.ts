@@ -4,7 +4,11 @@ import { Request, Response } from 'express';
 import { IndexService } from './index.service';
 import { uploaderMiddleware } from '@/http/middlewares/uploader.middleware';
 import { validationPipe } from '@/http/pipes/validation.pipe';
-import { analyzeFileSchema, sanitizeDBSchema } from '@/common/joi-schemas';
+import {
+  analyzeFileSchema,
+  sanitizeDBSchema,
+  saveFileSchema,
+} from '@/common/joi-schemas';
 
 export default class IndexController extends Controller {
   public route: string = '/';
@@ -37,6 +41,11 @@ export default class IndexController extends Controller {
           path: '/sanitize-db',
           middlewares: [await validationPipe(sanitizeDBSchema)],
           handler: this._sanitizeDB.bind(this),
+        },
+        {
+          path: '/save-file',
+          middlewares: [await validationPipe(saveFileSchema)],
+          handler: this._saveFile.bind(this),
         },
       ],
     };
@@ -72,6 +81,16 @@ export default class IndexController extends Controller {
   private async _sanitizeDB(req: Request, res: Response) {
     try {
       const result = await this._indexService.sanitizeDB(req.body);
+      this.sendResponse(result, res);
+    } catch (error) {
+      this.handleError(error, res);
+    }
+  }
+
+  private async _saveFile(req: Request, res: Response) {
+    try {
+      const result = await this._indexService.saveRecords(req.body.filename);
+
       this.sendResponse(result, res);
     } catch (error) {
       this.handleError(error, res);

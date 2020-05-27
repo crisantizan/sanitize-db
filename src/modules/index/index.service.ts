@@ -1,4 +1,10 @@
-import { readFileSync, pathExists, writeJSON, unlinkSync } from 'fs-extra';
+import {
+  readFileSync,
+  pathExists,
+  writeJSON,
+  unlinkSync,
+  readJsonSync,
+} from 'fs-extra';
 import { Service } from '@/services/service';
 import { HttpStatus } from '@/common/enums';
 
@@ -6,9 +12,10 @@ import { MulterFile, Index } from '@/typings/shared.type';
 import { AnalizeFileColumns, SanitizeDB } from './index.type';
 import { generatePath } from '@/helpers/generate-path.helper';
 import { escapeRegExp } from '@/helpers/shared.helper';
+import { DbService } from '@/services/db.service';
 
 export class IndexService extends Service {
-  constructor() {
+  constructor(private readonly _dbService = new DbService()) {
     super();
   }
 
@@ -36,7 +43,7 @@ export class IndexService extends Service {
   /** analyze columns and return fields amount */
   public async analyzeFileColumns({ filename, keyword }: AnalizeFileColumns) {
     try {
-      const path = await this._validateAndGeneratePath(filename);
+      const path = await this._validateAndGeneratePath('uploads', filename);
 
       const content = readFileSync(path, { flag: 'r', encoding: 'utf-8' });
       // get columns
@@ -72,7 +79,7 @@ export class IndexService extends Service {
 
   public async sanitizeDB({ columns, filter, filename, keyword }: SanitizeDB) {
     try {
-      const path = await this._validateAndGeneratePath(filename);
+      const path = await this._validateAndGeneratePath('uploads', filename);
       const content = readFileSync(path, { flag: 'r', encoding: 'utf-8' });
 
       // get columns
@@ -121,8 +128,33 @@ export class IndexService extends Service {
     }
   }
 
-  private async _validateAndGeneratePath(filename: string) {
-    const path = generatePath('uploads', filename);
+  /** save records in database */
+  public async saveRecords(filename: string) {
+    try {
+      const path = await this._validateAndGeneratePath('public', filename);
+      const content = readJsonSync(path) as any[];
+
+      const campaignNumber = await this._dbService.getLastCampaignNumber();
+
+      const news = content.map(u => ({
+        ...u,
+        campaign_number: campaignNumber + 1,
+      }));
+
+      // save in database
+      await this._dbService.save(news);
+      // remove json file
+      unlinkSync(path);
+
+      return this.response(HttpStatus.OK, true);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  private async _validateAndGeneratePath(folder: string, filename: string) {
+    const path = generatePath(folder, filename);
 
     if (!(await pathExists(path))) {
       throw this.response(HttpStatus.NOT_FOUND, 'Database file not found');

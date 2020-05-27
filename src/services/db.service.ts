@@ -1,4 +1,5 @@
 import { conn } from '@/database/connection';
+import { OkPacket } from 'mysql2';
 
 export class DbService {
   public async getLastCampaignNumber() {
@@ -6,7 +7,9 @@ export class DbService {
       'SELECT campaign_number FROM users LIMIT 1',
     );
 
-    return rows;
+    return !!(rows as Array<any>).length
+      ? (rows as Array<any>)[0].campaign_number
+      : 0;
   }
 
   /** save records */
@@ -18,6 +21,6 @@ export class DbService {
       values,
     ]);
 
-    return rows;
+    return rows as OkPacket;
   }
 }

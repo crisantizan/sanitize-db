@@ -1,1 +1,16 @@
-[{"name":"Cristian","lastname":"Santiz","age":"24","country":"Colombia","email":"crisantizan@gmail.com","genre":"Masculino"},{"name":"Camilo","lastname":"Contreras","age":"25","country":"Colombia","email":"camilo@gmail.com","genre":"Masculino"}]
+[
+  {
+    "name": "Cristian",
+    "lastname": "Santiz",
+    "phone": "92818711",
+    "address": "Galeras - Sucre",
+    "campaign_number": 2
+  },
+  {
+    "name": "Camilo",
+    "lastname": "Contreras",
+    "phone": "812234231",
+    "address": "Montería - Córdona",
+    "campaign_number": 2
+  }
+]

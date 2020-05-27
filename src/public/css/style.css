@@ -10,9 +10,32 @@
   --color-secondary: rgb(151, 7, 218);
 }
 
-input {
+input, select {
   font-size: 14px;
   padding: 0.5rem;
+}
+
+ol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: .5rem;
+
+  list-style: none;
+  counter-reset: li;
+}
+
+ol li {
+  letter-spacing: 2px;
+  font-size: 18px;
+}
+
+ol li::before {
+  counter-increment: li;
+  content: counter(li);
+  color: grey;
+  margin-right: .5rem;
+  font-size: 16px;
 }
 
 .backdrop {
@@ -116,4 +139,23 @@ form {
 
 .step-2 h2 {
   margin-bottom: 0.5rem;
+}
+
+/* ----- STEP 3 ----- */
+.step-3 {
+  display: flex;
+  flex-direction: column;
+}
+
+.step-3 h4 {
+  margin-top: .5rem;
+  text-align: center;
+}
+
+.step-3 input {
+  margin-top: .5rem;
+}
+
+.step-3 .select-columns {
+  margin-top: .5rem;
 }

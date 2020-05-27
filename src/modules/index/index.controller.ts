@@ -61,6 +61,7 @@ export default class IndexController extends Controller {
   /** analyze columns and return fields amount */
   private async _analyzeFileColumns(req: Request, res: Response) {
     try {
+      console.log({ body: req.body });
       const result = await this._indexService.analyzeFileColumns(req.body);
       this.sendResponse(result, res);
     } catch (error) {

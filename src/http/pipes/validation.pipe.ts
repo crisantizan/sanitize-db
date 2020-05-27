@@ -10,6 +10,7 @@ export async function validationPipe<T>(
   type: RequestValidationType = 'body',
 ) {
   return async (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.body);
     try {
       const data = await joiValidator(schema, req[type]);
       // body or querys

@@ -67,6 +67,7 @@ input {
   font-size: 14px;
   padding: 0.5rem;
   text-decoration: none;
+  transition: all ease .5s;
 }
 
 .btn:not(.disabled):hover {

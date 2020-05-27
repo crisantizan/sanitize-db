@@ -91,8 +91,13 @@ export class IndexService extends Service {
         const obj: Index<string> = {};
 
         columns.forEach((value, idx) => {
-          // get only filtered fields
-          if (filter.some(v => v === value)) {
+          if (filter.length) {
+            // get only filtered fields
+            if (filter.some(v => v === value)) {
+              obj[value] = fields[idx] || '';
+            }
+          } else {
+            // get all properties
             obj[value] = fields[idx] || '';
           }
         });

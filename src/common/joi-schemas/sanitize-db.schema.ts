@@ -9,7 +9,7 @@ export const sanitizeDBSchema = joi.object<SanitizeDB>({
     .required(),
   filter: joi
     .array()
-    .items(joi.string().required())
+    .items(joi.string())
     .required(),
   filename: joi.string().required(),
   keyword: joi.string().required(),

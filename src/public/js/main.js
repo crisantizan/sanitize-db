@@ -4,11 +4,15 @@ const prevBtn = document.getElementById('prevBtn');
 const stepLabel = document.getElementById('stepLabel');
 const backdrop = document.getElementById('backdrop');
 
-let activeIndexStep = 2;
+let activeIndexStep = 0;
 /** filename returned by backed [step 2] */
 let backendFilename = null;
+/** keyword selected */
+let keyword = null;
 /** file columns [step 2] */
-let fileColumns = 6;
+let fileColumnsNumber = null;
+/** json filename [step 3] */
+let jsonFile = null;
 
 /** update step label */
 function updateLabel(step) {
@@ -125,7 +129,6 @@ function step2() {
   const input = document.getElementById('keyword');
   const submitBtn = form.lastChild;
 
-  let keyword = '';
   let disabled = true;
 
   input.addEventListener('input', ({ target }) => {
@@ -165,7 +168,7 @@ function step2() {
 
       // { columns: number }
       const { response } = await result.json();
-      fileColumns = response.columns;
+      fileColumnsNumber = response.columns;
 
       // go to next step
       nextStep();
@@ -187,7 +190,10 @@ function step3() {
   const newColumn = document.getElementById('newColumn');
   const selectColumns = document.getElementById('selectColumns');
 
+  const filterBtn = document.getElementById('filterBtn');
+
   const regex = /^[a-zA-Z0-9_]+$/;
+  let disabled = true;
 
   let columns = [];
   let filteredColumns = [];
@@ -229,6 +235,12 @@ function step3() {
             // if found, remove child
             node.textContent === value && selectColumns.removeChild(node);
           });
+        }
+
+        // disable filter button
+        if (!columns.length || columns.length < fileColumnsNumber) {
+          disabled = true;
+          filterBtn.classList.add('disabled');
         }
         break;
 
@@ -283,6 +295,12 @@ function step3() {
 
     // reset value
     e.target.value = '';
+
+    // enable filter button
+    if (disabled && columns.length >= fileColumnsNumber) {
+      disabled = false;
+      filterBtn.classList.remove('disabled');
+    }
   });
 
   // select filterd columns
@@ -313,6 +331,51 @@ function step3() {
 
   columnsOl.addEventListener('dblclick', ({ target }) => {
     removeLiElements('parent', target);
+  });
+
+  // execute filter
+  filterBtn.addEventListener('click', async () => {
+    if (disabled || !backendFilename || !fileColumnsNumber) {
+      return alert('Algo anda mal');
+    }
+
+    // execute
+    const body = {
+      filename: backendFilename,
+      keyword,
+      columns,
+      filter: filteredColumns,
+    };
+    // columns, filter, filename, keyword
+    try {
+      toggleBackdrop();
+      const result = await fetch('/sanitize-db', {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify(body),
+      });
+
+      if (!result.ok) {
+        throw await result.json();
+      }
+
+      // { jsonFile: string }
+      const { response } = await result.json();
+      jsonFile = response.jsonFile;
+
+      console.log({ jsonFile });
+
+      // go to last step
+      nextStep();
+      toggleBackdrop();
+    } catch (error) {
+      toggleBackdrop();
+      console.error(error);
+      alert(error.response);
+    }
   });
 }
 

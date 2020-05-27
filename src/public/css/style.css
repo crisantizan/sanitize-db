@@ -90,7 +90,7 @@ ol li::before {
   font-size: 14px;
   padding: 0.5rem;
   text-decoration: none;
-  transition: all ease .5s;
+  transition: all ease .3s;
 }
 
 .btn:not(.disabled):hover {
@@ -157,5 +157,9 @@ form {
 }
 
 .step-3 .select-columns {
+  margin-top: .5rem;
+}
+
+.step-3 button {
   margin-top: .5rem;
 }

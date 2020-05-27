@@ -1,8 +1,7 @@
 const steps = document.getElementsByClassName('step');
-const nextBtn = document.getElementById('nextBtn');
-const prevBtn = document.getElementById('prevBtn');
 const stepLabel = document.getElementById('stepLabel');
 const backdrop = document.getElementById('backdrop');
+const columnsNumberSpan = document.getElementById('columnsNumberSpan');
 
 let activeIndexStep = 0;
 /** filename returned by backed [step 2] */
@@ -169,6 +168,9 @@ function step2() {
       // { columns: number }
       const { response } = await result.json();
       fileColumnsNumber = response.columns;
+
+      // print in span
+      columnsNumberSpan.textContent = fileColumnsNumber;
 
       // go to next step
       nextStep();

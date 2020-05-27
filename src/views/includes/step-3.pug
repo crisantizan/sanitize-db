@@ -1,11 +1,13 @@
 h3 Establecer columnas y filtrar
 
-h4 Nombres de columnas
+h4 Nombres de columnas (#[span(id="columnsNumberSpan")] columnas detectadas)
+p Añada aquí los nombres correspondientes a cada columna, el orden es primordial si no quiere generar fallos
 ol(id="columns" class="columns")
 
 input(type="text" id="newColumn" placeholder="Ingresa nombre de nueva columna")
 
 h4 Filtrar columnas
+p Seleccione las columnas que quiere obtener, deje en blanco si quiere obtenerlas todas
 select(id="selectColumns" class="select-columns")
   option(value="" disabled selected) Seleccionar columna
 

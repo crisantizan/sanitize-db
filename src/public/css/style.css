@@ -55,7 +55,7 @@ ol li::before {
 }
 
 .container {
-  max-width: 550px;
+  max-width: 400px;
   margin: 0 auto;
   padding: 1rem;
 }
@@ -131,7 +131,15 @@ form {
   margin-top: 0.5rem;
 }
 
+.step-1 .form-step-1 input {
+  margin-top: .5rem;
+}
+
 /* ----- STEP 2 ----- */
+
+.step-2 form {
+  margin-top: .5rem;
+}
 
 .step-2 .form-step-2 button {
   margin-top: 0.5rem;
@@ -150,6 +158,10 @@ form {
 .step-3 h4 {
   margin-top: .5rem;
   text-align: center;
+}
+
+.step-3 h4 span {
+  font-weight: bold;
 }
 
 .step-3 input {

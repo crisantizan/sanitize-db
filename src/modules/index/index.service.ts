@@ -134,15 +134,18 @@ export class IndexService extends Service {
       const path = await this._validateAndGeneratePath('public', filename);
       const content = readJsonSync(path) as any[];
 
+      // last campaign number inserted
       const campaignNumber = await this._dbService.getLastCampaignNumber();
 
-      const news = content.map(u => ({
+      // add field "campaign_number"
+      const data = content.map(u => ({
         ...u,
+        // increment campaign number
         campaign_number: campaignNumber + 1,
       }));
 
       // save in database
-      await this._dbService.save(news);
+      await this._dbService.save(data);
       // remove json file
       unlinkSync(path);
 

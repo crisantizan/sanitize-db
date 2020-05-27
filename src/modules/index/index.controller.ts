@@ -52,8 +52,8 @@ export default class IndexController extends Controller {
   }
 
   /** ------------------ VIEWS ------------------ */
-  private _renderIndexPage(req: Request, res: Response) {
-    res.render('index', { environment: 'development' });
+  private _renderIndexPage(_: Request, res: Response) {
+    res.render('index');
   }
 
   /** ------------------ API ------------------ */
